@@ -1,0 +1,58 @@
+[package]
+name = "uuid_altenc"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "Apache-2.0"
+description = "Alternate UUID text encodings (Base16/32/36/52/58/62/64/85, NCName-32/58/64, Base62id) per draft-davis-uuidrev-alt-uuid-encoding-methods-00"
+repository = "https://github.com/davlgd/uuid_altenc"
+homepage = "https://github.com/davlgd/uuid_altenc"
+documentation = "https://docs.rs/uuid_altenc"
+keywords = ["uuid", "encoding", "base32", "base64", "ncname"]
+categories = ["encoding", "parser-implementations"]
+readme = "README.md"
+include = [
+    "/src/**/*.rs",
+    "/tests/**/*.rs",
+    "/examples/**/*.rs",
+    "/examples/webui_index.html",
+    "/Cargo.toml",
+    "/README.md",
+    "/LICENSE",
+    "/CHANGELOG.md",
+]
+
+[lib]
+name = "uuid_altenc"
+path = "src/lib.rs"
+
+[features]
+default = []
+# Implements `serde::Serialize` / `Deserialize` for `Uuid`, emitting the
+# canonical hex-dash form for human-readable formats and the raw 16 bytes
+# for binary formats.
+serde = ["dep:serde"]
+
+[dependencies]
+serde = { version = "1", default-features = false, optional = true }
+
+[dev-dependencies]
+serde_json = "1"
+
+[[example]]
+name = "demo"
+path = "examples/demo.rs"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+unreachable_pub = "warn"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+missing_errors_doc = "allow"
+module_name_repetitions = "allow"

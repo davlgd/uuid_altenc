@@ -1,0 +1,15 @@
+/target
+Cargo.lock
+
+# OS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Cross-check harness (Dart)
+/comparison/.dart_tool/
+/comparison/pubspec.lock
+/comparison/.packages
