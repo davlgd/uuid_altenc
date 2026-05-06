@@ -62,15 +62,29 @@ assert_eq!(back, uuid);
 Base62id, Base64url and NCName-64 alphabets overlap, so call the
 specific decoder when you know the format.
 
-## Run the example
+## Run the examples
 
-```sh
-cargo run --example demo
-```
+The crate ships two examples, with deliberately different audiences:
 
-`examples/demo.rs` walks through every encoding for one UUID, with a
-short note next to each output explaining what it is for. It is the
-quickest way to see how the formats compare side by side.
+- **`demo`** — a CLI walkthrough that prints every encoding for a
+  fixed UUID with a short note next to each output. Start here if you
+  want to see what the library can do in one screenful.
+
+  ```sh
+  cargo run --example demo
+  ```
+
+- **`webui`** — an interactive web page backed by a stdlib-only HTTP
+  server (no `tokio`/`hyper`/`serde_json`). Run it when you want to
+  share a URL with a teammate, decode pasted values, generate random
+  UUIDs, or compare widths visually.
+
+  ```sh
+  cargo run --example webui            # open http://localhost:8080
+  cargo run --example webui -- --help  # routes + env vars
+  ```
+
+  Defaults bind to `0.0.0.0:8080`. Override with `PORT=…` and `HOST=…`.
 
 ## Public API in one screen
 
@@ -117,13 +131,15 @@ form; binary formats (bincode, MessagePack…) emit the raw 16 bytes.
 ## Conformance
 
 `cargo test` runs every Appendix C vector from the draft in both
-directions, plus property round-trips on 256 random UUIDs and 15
-security regressions (`tests/security.rs`).
+directions, plus property round-trips on 256 random UUIDs, an RFC 9562
+conformance suite (`tests/rfc9562_conformance.rs`), and a security
+regression suite (`tests/security.rs`).
 
-The `comparison/` directory holds a small Dart project that runs the
-reference [`uuid-format-tester`][uft] encoders on the same UUIDs and
-prints the outputs side by side, as an independent cross-check. See
-`comparison/README.md` for usage.
+A small Dart project that runs the reference [`uuid-format-tester`][uft]
+encoders on the same UUIDs and prints the outputs side by side, as an
+independent cross-check, lives in the
+[`comparison/`](https://github.com/davlgd/uuid_altenc/tree/main/comparison)
+directory of the repository (not shipped on crates.io).
 
 [uft]: https://github.com/daegalus/uuid-format-tester
 
